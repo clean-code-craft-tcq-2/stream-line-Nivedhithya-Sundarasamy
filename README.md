@@ -54,6 +54,10 @@ Create a method 'interpretTemperatureAndVoltageFromSensors'.
 		Temperature Sensor ADC Values in 10 bit integer: 100, 1022, 0, 700, 655 ..... 324 \
 		Voltage Sensor ADC Values in 10 bit integer: 600, 876, 345, 457, 322 ...... 378 
 
+## Initial Sequence Diagram / Code Flow
+
+![Initial Code Flow](/docs/images/SenderSequnceDiagramInitial.png)
+
 # Streaming BMS Data
 
 This project is about sending and receiving BMS data.
