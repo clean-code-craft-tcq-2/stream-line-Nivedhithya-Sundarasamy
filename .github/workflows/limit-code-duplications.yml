@@ -14,4 +14,4 @@ jobs:
       run: sudo npm install -g jscpd
 
     - name: No Duplication beyond 3 lines and 50 tokens
-      run: jscpd ./ --min-lines 3 --min-tokens 50 --threshold 0 --mode strict
+      run: jscpd ./sender --min-lines 3 --min-tokens 50 --threshold 0 --mode strict
