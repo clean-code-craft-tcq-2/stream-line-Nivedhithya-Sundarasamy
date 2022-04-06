@@ -12,7 +12,7 @@ using std::endl;
 using std::string;
 using std::ifstream;
 
-void getInputValues(char inputFileName[], int *parameterSensorADCValues){
+void readInputValuesFromFile(string inputFileName, int *parameterSensorADCValues){
 	int  valueRead, i=0;
 	string InputValues(inputFileName);
 	ifstream input_file(InputValues);
@@ -24,8 +24,23 @@ void getInputValues(char inputFileName[], int *parameterSensorADCValues){
 		parameterSensorADCValues[i] = valueRead;
 		i++;
 	}
-	cout << endl;
 	input_file.close();
+}
+
+void readExpectedOutputValuesFromFile(string outputFileName, char expectedOutput[][10]){
+	int maxChar=50, i=0;
+	char outputValueRead[maxChar];
+	string expectedTempAndVolt(outputFileName);
+	ifstream output_file(expectedTempAndVolt);
+	
+	if (!output_file.is_open()) {
+		cerr << "Could not open the output file" << endl;
+	}
+	while (output_file.getline(outputValueRead, maxChar)){
+		strcpy(expectedOutput[i], outputValueRead);	
+		i++;
+	}
+	output_file.close();
 }
 
 SCENARIO( "Interpret Temperature and Voltage for randomly generated integer values of 'n' bit resolution" ){
@@ -34,10 +49,7 @@ SCENARIO( "Interpret Temperature and Voltage for randomly generated integer valu
 	size_t numberOfSamples = 0;
 	int voltSensorADCValues[MAX_INPUT_STREAM];
 	int tempSensorADCValues[MAX_INPUT_STREAM];
-	int valueReadTemp, valueReadVolt, i=0, j=0;
-	int maxChar=50;
 	char expectedOutput[MAX_INPUT_STREAM][10];
-	char outputValueRead[maxChar];
 
 	GIVEN( "Integer values of 'n' bit resolution for given measurement range for simulation of temperature and voltage sensor output"){
 
@@ -48,23 +60,10 @@ SCENARIO( "Interpret Temperature and Voltage for randomly generated integer valu
 		voltInfo.maxValue = 60;
 		voltInfo.resolution = 12;	
 		
-		getInputValues("TempSensorValues.txt", tempSensorADCValues);
-		getInputValues("VoltSensorValues.txt", voltSensorADCValues);
+		readInputValuesFromFile("TempSensorValues.txt", tempSensorADCValues);
+		readInputValuesFromFile("VoltSensorValues.txt", voltSensorADCValues);
 		
-		//Expected Output Values
-		string expectedTempAndVolt("OutputValues.txt");
-	
-		ifstream output_file(expectedTempAndVolt);
-
-		if (!output_file.is_open()) {
-			cerr << "Could not open the output file" << endl;
-		}
-		while (output_file.getline(outputValueRead, maxChar)){
-			strcpy(expectedOutput[j], outputValueRead);	
-			j++;
-		}
-		cout << endl;
-		output_file.close();
+		readExpectedOutputValuesFromFile("OutputValues.txt", expectedOutput);
 		
 		// Size of Input Samples
 		numberOfSamples = sizeof(tempSensorADCValues) / sizeof(tempSensorADCValues[0]);
@@ -79,6 +78,7 @@ SCENARIO( "Interpret Temperature and Voltage for randomly generated integer valu
 				for(size_t k=0; k < numberOfSamples; k++) {
 					REQUIRE(strcmp(tempAndVoltValuesInCSV[k], expectedOutput[k]) == 0);
 				}
+			freeMemoryForCharJaggedArray(tempAndVoltValuesInCSV, numberOfSamples);
 			}
 		}
 	}

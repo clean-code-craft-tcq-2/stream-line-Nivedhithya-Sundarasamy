@@ -2,8 +2,6 @@
 #include <math.h>
 #include <string.h>
 #include "InterpretTemperatureAndVoltageValues.h"
-
-
 	
 int calculateMaxIntegerValue(int ADC_Resolution) {
 	int maxIntegerValue;

@@ -22,7 +22,7 @@ jobs:
       run: ./parameterValueSender
 
     - name: collect coverage
-      run: gcovr --exclude="test.*" -r sender --html --html-details -o coverage.html --print-summary
+      run: gcovr --gcov-exclude=".*Test.*" --exclude="test.*" -r . --html --html-details -o coverage.html --print-summary
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
