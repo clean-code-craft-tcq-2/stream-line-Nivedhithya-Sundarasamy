@@ -26,7 +26,7 @@ jobs:
       run: ./parameterValueReceiver
 
     - name: pipe_sender_receiver_executables
-      run: ./parameterValueSender | ./parameterValueSender
+      run: ./parameterValueSender | ./parameterValueReceiver
 
     - name: collect coverage
       run: gcovr --gcov-exclude=".*Test.*" --exclude="test.*" -r . --html --html-details -o coverage.html --print-summary
