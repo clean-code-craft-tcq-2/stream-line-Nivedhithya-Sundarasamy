@@ -17,9 +17,16 @@ jobs:
 
     - name: build
       run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -I ./sender sender/*.c* -o parameterValueSender
-      
-    - name: run
-      run: ./parameterValueSender
+
+
+    - name: build_Receiver
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -I ./receiver receiver/*.c* -o parameterValueReceiver
+
+    - name: run_ReceiverTest
+      run: ./parameterValueReceiver
+
+    - name: pipe_sender_receiver_executables
+      run: ./parameterValueSender | ./parameterValueSender
 
     - name: collect coverage
       run: gcovr --gcov-exclude=".*Test.*" --exclude="test.*" -r . --html --html-details -o coverage.html --print-summary
