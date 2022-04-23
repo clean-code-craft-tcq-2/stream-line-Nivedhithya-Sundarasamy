@@ -1,3 +1,63 @@
+# Sender 
+
+## Overview
+
+![Sender Overview](/docs/images/Sender_Overview.png)
+
+## Test Specification
+
+Create a method 'interpretTemperatureAndVoltageFromSensors'.
+
+1) This method takes up the ADC values from Temperature & Voltage sensors and will return the temperature and voltage values seperated by comma \
+	Eg: \
+		ADC Resolution: 10 bits \
+		Temperature Measurement Range: -45 to 85 deg. celcius \
+		Voltage Measurement Range: 0 to 60V (based on ISO 6469-3 class A and B: Low voltage class 1: ≤ 30 VAC and ≤ 60 VDC is considered) \
+		
+		Temperature Sensor ADC Value in 10 bit integer: 100 \
+		Voltage Sensor ADC Valuesin 10 bit integer: 600 \
+
+		Output(Temperature, Voltage): -32, 35 
+
+2) Allow method to take ADC values of 'n' bit resolution\
+
+	Eg:\
+		ADC Values in 10 bit integer range: i.e 0-1023\
+		ADC Values in 12 bit integer range i.e 0-4095\
+		ADC Values in 15 bit integer range i.e 0-32767
+
+3) Allow method to take given measurement range for the sensors\
+	ie. Temperature Sensor Measurement Range can be any given range\
+		1) -45 to 85 deg.c\
+		2) 25 to -45 deg.c \
+	    Voltage Sensor Measurement Range can be any given range\
+		1) 0 to 60V (Low Voltage class)\
+		2) 0 to 900V (High Voltage class)
+
+4) Allow method to interpret the temperature and voltage values based on given measurement range from the ADC of 'n' bit resoultion of the corresponding sensors.\
+		Temp/Volt = Min.measurement range + ((Max. measurement Range) * (Current ADC value in integer of 'n' bit resolution / Max possible integer value for 'n' bit resolution) * (total measurement range / max measurement value)) 
+
+5) Method have to roundoff the interpreted temperature and voltage values\
+	Eg: \
+		-32.167 --> -32 \
+	    -32.576 --> -33 
+
+6) Allow method to format the interpreted temperature and voltage values in CSV (Comma seperated Values) format\
+	Eg: \
+		0 , 55 \
+		-12, 32	
+
+7) Formatted output has to be printed on console. 
+
+8) Allow method to take stream of input values (Here: Consider 50) \
+	Eg:\
+		Temperature Sensor ADC Values in 10 bit integer: 100, 1022, 0, 700, 655 ..... 324 \
+		Voltage Sensor ADC Values in 10 bit integer: 600, 876, 345, 457, 322 ...... 378 
+
+## Initial Sequence Diagram / Code Flow
+
+![Initial Code Flow](/docs/images/SenderSequnceDiagramInitial.png)
+
 # Streaming BMS Data
 
 This project is about sending and receiving BMS data.
