@@ -16,19 +16,27 @@ void readParamFromConsole(){
 }
 
 int getTemperatureMax(){
-    return *(std::max_element(temperatureInput.begin(), temperatureInput.end()));
+    int maxTemp = *(std::max_element(temperatureInput.begin(), temperatureInput.end()));
+    std::cout << "Maximum temperature = " << maxTemp << "\n" ;
+    return maxTemp;
 }
 
 int getTemperatureMin(){
-    return *(std::min_element(temperatureInput.begin(), temperatureInput.end()));
+    int minTemp =  *(std::min_element(temperatureInput.begin(), temperatureInput.end()));
+    std::cout << "Minimum temperature = " << minTemp << "\n" ;
+    return minTemp;
 }
 
 int getVoltageMax(){
-    return *(std::max_element(voltageInput.begin(), voltageInput.end()));
+    int maxVoltage = *(std::max_element(voltageInput.begin(), voltageInput.end()));
+    std::cout << "Maximum temperature = " << maxVoltage << "\n" ;
+    return maxVoltage;
 }
 
 int getVoltageMin(){
-    return *(std::min_element(voltageInput.begin(), voltageInput.end()));
+    int minVoltage = *(std::min_element(voltageInput.begin(), voltageInput.end()));
+    std::cout << "Maximum temperature = " << minVoltage << "\n" ;
+    return minVoltage;
 }
 
 int getSimpleMovingAverageTemperature(){
@@ -36,6 +44,7 @@ int getSimpleMovingAverageTemperature(){
     for(auto iter = temperatureInput.end()-5; iter < temperatureInput.end(); iter++){
         sum += *iter;
     }
+    std::cout << "Simple moving average of temperature reading = " << sum / 5 << "\n" ;
     return sum / 5;
 }
 
@@ -44,5 +53,6 @@ int getSimpleMovingAverageVoltage(){
     for(auto iter = voltageInput.end()-5; iter < voltageInput.end(); iter++){
         sum += *iter;
     }
+    std::cout << "Simple moving average of voltage reading = " << sum / 5 << "\n" ;
     return sum / 5;
 }
